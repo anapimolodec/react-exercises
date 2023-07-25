@@ -3,14 +3,14 @@ import { questionsData, submissionsData } from './datafromAPI';
 import './QuestionList.css';
 
 const QuestionList = () => {
-  const [questions, setQuestions] = useState(null);
+  const [ , setQuestions] = useState(null);
   const [cats, setCats] = useState(null);
-  const [submissions, setSubmissions] = useState(null);
+  const [ , setSubmissions] = useState(null);
 
   const getStatus = (id) => {
     let i = 0;
     while (submissionsData[i]) {
-        if (submissionsData[i].questionId == id) {
+        if (submissionsData[i].questionId === id) {
             return submissionsData[i].status;
         }
         i++;
@@ -41,13 +41,24 @@ const QuestionList = () => {
         
         
     }, []);
-    console.log(cats);
+    const countCorrect = (object) => {
+        let i = 0;
+        let count = 0;
+        while (object[i]) {
+            if (object[i].status === "CORRECT") {
+                count++;
+            }
+            i++;
+        }
+        return (count);
+    }
   return (
         <div className="main">
         { cats &&
             Object.keys(cats).map((cat) => {
+                const correct = countCorrect(cats[cat]);
                 return (
-                <Category cat={cat} cats={cats}/>
+                <Category cat={cat} cats={cats} correct={correct}/>
                 );
             })
         }
@@ -57,15 +68,19 @@ const QuestionList = () => {
 
 export default QuestionList;
 
-const Category = ({cat, cats}) => {
-    console.log(cat, cats);
+const Category = ({cat, cats, correct}) => {
+    
     return (
       <div className = "category">
-        <h2>{cat} 1/{cats[cat].length}</h2>
+        <h2>{cat} {correct}/{cats[cat].length}</h2>
         {cats[cat].map((question, i) => {
+            if (question.status === "CORRECT") {
+                correct++;
+            }
             return (<Question 
             key = {i}
-            question = {question}/>);
+            question = {question}
+            />);
         })}
       </div>);
   }
