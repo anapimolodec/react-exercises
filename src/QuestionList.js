@@ -1,6 +1,6 @@
 import {useEffect, useState} from 'react';
 import { questionsData, submissionsData } from './datafromAPI';
-
+import './QuestionList.css';
 
 const QuestionList = () => {
   const [questions, setQuestions] = useState(null);
@@ -43,7 +43,7 @@ const QuestionList = () => {
     }, []);
     console.log(cats);
   return (
-        <>
+        <div className="main">
         { cats &&
             Object.keys(cats).map((cat) => {
                 return (
@@ -51,7 +51,7 @@ const QuestionList = () => {
                 );
             })
         }
-        </>
+        </div>
     );
 }
 
@@ -75,9 +75,9 @@ const Question = ({question}) => {
         if (str) {
             return (str.toLowerCase().replaceAll('_', '-'));
         }
-        return (null);
+        return ('unattempted');
     }
-    const status = convertStatus(question.status) + 'status';
+    const status = convertStatus(question.status) + ' status';
     return (
         <div className="question">
             <div className={status}></div>
