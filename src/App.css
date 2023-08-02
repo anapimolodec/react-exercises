@@ -7,6 +7,11 @@
   pointer-events: none;
 }
 
+.question-title {
+  margin: 25px 0 50px 0;
+  border-bottom: 5px solid #11967e;
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
